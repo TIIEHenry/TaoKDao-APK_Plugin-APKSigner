@@ -8,9 +8,9 @@ import taokdao.api.plugin.bean.PluginManifest;
 import taokdao.plugins.apk.signer.key.load.KeyPassManager;
 import taokdao.plugins.apk.signer.key.load.KeyStoreManager;
 import taokdao.plugins.apk.signer.key.manage.KeyStoreManageDialog;
+import taokdao.plugins.setup.io.Filej;
 import tiiehenry.android.ui.dialogs.api.IDialog;
 import tiiehenry.android.ui.dialogs.api.strategy.Dialogs;
-import tiiehenry.io.Filej;
 
 public class KeyStoreImporter {
 
