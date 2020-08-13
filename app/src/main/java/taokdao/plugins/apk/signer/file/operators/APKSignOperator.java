@@ -10,7 +10,7 @@ import taokdao.api.file.base.FileType;
 import taokdao.api.file.operate.wrapped.SuffixIFileOperator;
 import taokdao.api.main.IMainContext;
 import taokdao.api.plugin.bean.PluginManifest;
-import taokdao.plugins.apk.signer.AConstant;
+import taokdao.plugins.apk.signer.PluginConstant;
 import taokdao.plugins.apk.signer.file.APKSigner;
 
 public class APKSignOperator extends SuffixIFileOperator {
@@ -46,7 +46,7 @@ public class APKSignOperator extends SuffixIFileOperator {
     @NonNull
     @Override
     public String id() {
-        return AConstant.FileOperator.SIGN_APK;
+        return PluginConstant.FileOperator.SIGN_APK;
     }
 
     @Override

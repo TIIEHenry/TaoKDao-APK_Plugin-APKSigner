@@ -15,12 +15,7 @@ import taokdao.plugins.apk.signer.key.manage.KeyStoreManageDialog;
 
 public class KeyStoreManageController extends BaseDynamicPluginEntrance {
 
-    private Context pluginContext;
     private JavaProvider javaProvider;
-
-    public void onAttach(@NonNull Context pluginContext) {
-        this.pluginContext = pluginContext;
-    }
 
     public void onInit(@NonNull IMainContext iMainContext, @NonNull PluginManifest pluginManifest) {
         javaProvider = new JavaProvider();

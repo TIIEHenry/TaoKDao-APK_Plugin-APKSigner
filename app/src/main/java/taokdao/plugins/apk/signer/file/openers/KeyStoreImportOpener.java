@@ -5,13 +5,11 @@ import android.graphics.drawable.Drawable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.io.File;
-
 import taokdao.api.file.open.IFileOpener;
 import taokdao.api.main.IMainContext;
 import taokdao.api.plugin.bean.PluginManifest;
 import taokdao.api.ui.content.manage.IContentManager;
-import taokdao.plugins.apk.signer.AConstant;
+import taokdao.plugins.apk.signer.PluginConstant;
 import taokdao.plugins.apk.signer.file.KeyStoreImporter;
 import taokdao.plugins.apk.signer.key.bean.KeyStoreType;
 
@@ -48,7 +46,7 @@ public class KeyStoreImportOpener implements IFileOpener {
     @NonNull
     @Override
     public String id() {
-        return AConstant.FileOpener.IMPORT_KEYSTORE;
+        return PluginConstant.FileOpener.IMPORT_KEYSTORE;
     }
 
     @Override

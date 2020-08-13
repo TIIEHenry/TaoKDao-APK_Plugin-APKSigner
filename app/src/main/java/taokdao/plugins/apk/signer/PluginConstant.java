@@ -3,8 +3,8 @@ package taokdao.plugins.apk.signer;
 import androidx.annotation.Keep;
 
 @Keep
-public class AConstant {
-    public static String Project_Template_ID = AConstant.class.getPackage().getName();
+public class PluginConstant {
+    public static String Project_Template_ID = PluginConstant.class.getPackage().getName();
 
     public static class FileOpener {
         public static final String IMPORT_KEYSTORE = "taokdao.opener.apk.signer.import";

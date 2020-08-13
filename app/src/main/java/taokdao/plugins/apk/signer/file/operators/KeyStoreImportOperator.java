@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import taokdao.api.file.operate.IFileOperator;
 import taokdao.api.main.IMainContext;
 import taokdao.api.plugin.bean.PluginManifest;
-import taokdao.plugins.apk.signer.AConstant;
+import taokdao.plugins.apk.signer.PluginConstant;
 import taokdao.plugins.apk.signer.file.KeyStoreImporter;
 import taokdao.plugins.apk.signer.key.bean.KeyStoreType;
 
@@ -42,7 +42,7 @@ public class KeyStoreImportOperator implements IFileOperator {
     @NonNull
     @Override
     public String id() {
-        return AConstant.FileOperator.IMPORT_KEYSTORE;
+        return PluginConstant.FileOperator.IMPORT_KEYSTORE;
     }
 
     @Override

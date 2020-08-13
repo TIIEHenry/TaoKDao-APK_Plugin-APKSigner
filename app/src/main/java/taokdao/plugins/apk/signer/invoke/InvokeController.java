@@ -10,12 +10,12 @@ import java.util.Map;
 import taokdao.api.main.IMainContext;
 import taokdao.api.plugin.bean.PluginManifest;
 import taokdao.api.plugin.bridge.invoke.IInvokeCallback;
-import taokdao.plugins.apk.signer.AConstant;
+import taokdao.plugins.apk.signer.PluginConstant;
 
 public class InvokeController {
     public String onInvoke(@NonNull IMainContext main, @NonNull PluginManifest manifest, @NonNull String method, @Nullable String params, @Nullable IInvokeCallback invokeCallback) {
         switch (method) {
-            case AConstant.Invoker.PARAM_SIGN_APK:
+            case PluginConstant.Invoker.PARAM_SIGN_APK:
                 return onSignApk(main, manifest, params, invokeCallback);
             case "request_sign_apk":
                 return requestSignApk(main, manifest, params, invokeCallback);
