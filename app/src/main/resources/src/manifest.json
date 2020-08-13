@@ -1,0 +1,37 @@
+{
+  "id": "taokdao.plugins.apk.signer",
+  "type": "TYPE_COMMON",
+  "api":"1.0",
+  "version": {
+    "code": 20200831,
+    "name": "2020.08.31",
+    "downgrade": true
+  },
+  "information": {
+    "author": "TIIEHenry",
+    "label": "APK Signer",
+    "icon": "apk",
+    "description": "提供私钥管理、APK签名支持",
+    "tags": ["APK","Cert","Sign","KeyStore"],
+    "readme": "README.MD"
+  },
+  "languages": [
+    "zh-CN"
+  ],
+  "visibility": {
+    "type": "1",
+    "contents": [
+
+    ],
+    "suffixes": [
+
+    ]
+  },
+  "engine": {
+    "id": "taokdao.plugins.engine.apk",
+    "entrance": "/.DynamicEntrance",
+    "parameters": [
+      "installed"
+    ]
+  }
+}

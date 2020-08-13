@@ -1,0 +1,5 @@
+rootProject.name = 'APKSigner'
+include ':app'
+
+includeBuild '../TaoKDao-API'
+//includeBuild '../TaoKDao-Plugin-Setup'

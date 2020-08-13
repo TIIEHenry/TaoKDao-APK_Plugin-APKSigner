@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:ignore="UseSwitchCompatOrMaterialXml">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/KeyStore_Sign_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="秘钥库" />
+
+        <Spinner
+            android:id="@+id/sp_store"
+            style="@style/KeyStore_Sign_Spinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/KeyStore_Sign_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="私钥/别名" />
+
+        <Spinner
+            android:id="@+id/sp_alias"
+            style="@style/KeyStore_Sign_Spinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+
+    <Switch
+        android:id="@+id/sp_v1"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:checked="true"
+        style="@style/KeyStore_Sign_Switch"
+        android:text="使用 v1 签名方案" />
+
+    <Switch
+        android:id="@+id/sp_v2"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:checked="true"
+        style="@style/KeyStore_Sign_Switch"
+        android:text="使用 v2 签名方案" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        style="@style/KeyStore_Sign_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        tools:text="使用v2签名" />
+</LinearLayout>
