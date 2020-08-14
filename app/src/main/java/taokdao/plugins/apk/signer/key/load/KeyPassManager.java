@@ -1,16 +1,15 @@
 package taokdao.plugins.apk.signer.key.load;
 
-import com.tencent.mmkv.MMKV;
-
 import java.io.File;
 
+import taokdao.api.data.mmkv.IMMKV;
 import taokdao.api.main.IMainContext;
 import taokdao.api.plugin.bean.PluginManifest;
 
 public class KeyPassManager {
-    public final MMKV mmkv;
+    public final IMMKV mmkv;
 
-    private KeyPassManager(MMKV mmkv) {
+    private KeyPassManager(IMMKV mmkv) {
         this.mmkv = mmkv;
     }
 
@@ -29,12 +28,12 @@ public class KeyPassManager {
         mmkv.encode(storeName + "." + aliasName, password);
     }
 
-    public static KeyPassManager fromMMKV(MMKV mmkv) {
+    public static KeyPassManager fromMMKV(IMMKV mmkv) {
         return new KeyPassManager(mmkv);
     }
 
     public static KeyPassManager from(IMainContext main, PluginManifest pluginManifest) {
-        MMKV mmkv = main.getMMKVManager().getPluginMMKV(pluginManifest);
+        IMMKV mmkv = main.getMMKVManager().getPluginMMKV(pluginManifest);
         return fromMMKV(mmkv);
     }
 }

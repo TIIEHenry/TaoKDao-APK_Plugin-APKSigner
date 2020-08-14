@@ -1,14 +1,12 @@
 package taokdao.plugins.apk.signer.key.load;
 
-import com.tencent.mmkv.MMKV;
-
-import java.io.File;
+import taokdao.api.data.mmkv.IMMKV;
 
 public class StorePassManager {
     private String storeName;
-    private final MMKV mmkv;
+    private final IMMKV mmkv;
 
-    public StorePassManager(MMKV mmkv, String storeName) {
+    public StorePassManager(IMMKV mmkv, String storeName) {
         this.mmkv = mmkv;
         this.storeName = storeName;
     }
@@ -21,7 +19,7 @@ public class StorePassManager {
         if (password != null)
             mmkv.encode(storeName, password);
         else
-            mmkv.remove(storeName);
+            mmkv.removeValueForKey(storeName);
     }
 
     public String getAliasPass(String aliasName) {
@@ -32,7 +30,7 @@ public class StorePassManager {
         if (password != null)
             mmkv.encode(storeName + "." + aliasName, password);
         else
-            mmkv.remove(storeName + "." + aliasName);
+            mmkv.removeValueForKey(storeName + "." + aliasName);
     }
 
     public void clearStore(){
@@ -40,7 +38,7 @@ public class StorePassManager {
         String[] keys = mmkv.allKeys();
         for (String key : keys) {
             if (key.startsWith(storeName + ".")) {
-                mmkv.remove(key);
+                mmkv.removeValueForKey(key);
             }
         }
     }
@@ -52,9 +50,9 @@ public class StorePassManager {
         for (String key : keys) {
             if (key.startsWith(storeName + ".")) {
                 String alias = key.substring(storeName.length()+1, keys.length);
-                String pass = mmkv.getString(key,null);
+                String pass = mmkv.decodeString(key,null);
                 newStorePassManager.setAliasPass(alias,pass);
-                mmkv.remove(key);
+                mmkv.removeValueForKey(key);
             }
         }
         storeName=newName;
