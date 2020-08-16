@@ -11,8 +11,8 @@ import taokdao.api.main.IMainContext;
 import taokdao.api.setting.theme.resource.ThemeColors;
 import taokdao.api.setting.theme.resource.ThemeDrawables;
 import taokdao.plugins.apk.signer.R;
-import tiiehenry.android.view.adapter.base.InflateRecyclerAdapter;
-import tiiehenry.android.view.adapter.holder.RecyclerViewHolder;
+import tiiehenry.android.view.recyclerview.adapter.InflateRecyclerAdapter;
+import tiiehenry.android.view.recyclerview.holder.RecyclerViewHolder;
 
 public class PairTextAdapter extends InflateRecyclerAdapter<PairTextItem> {
     private final LayoutInflater layoutInflater;
@@ -21,6 +21,7 @@ public class PairTextAdapter extends InflateRecyclerAdapter<PairTextItem> {
     private final IMainContext mainContext;
 
     public PairTextAdapter(LayoutInflater layoutInflater, ThemeColors themeColors, ThemeDrawables themeDrawables, IMainContext mainContext) {
+        super();
         this.layoutInflater = layoutInflater;
         this.themeColors = themeColors;
         this.themeDrawables = themeDrawables;
@@ -33,7 +34,7 @@ public class PairTextAdapter extends InflateRecyclerAdapter<PairTextItem> {
     }
 
     @Override
-    protected void bindData(@NonNull RecyclerViewHolder holder, int position, PairTextItem item) {
+    public void bindData(@NonNull RecyclerViewHolder holder, int position, PairTextItem item) {
         TextView title = holder.getTextView(R.id.tv_title);
         title.setText(item.title);
         title.setTextColor(themeColors.foregroundColor);
@@ -42,4 +43,5 @@ public class PairTextAdapter extends InflateRecyclerAdapter<PairTextItem> {
         message.setText(item.message);
         message.setTextColor(themeColors.foregroundColor);
     }
+
 }
