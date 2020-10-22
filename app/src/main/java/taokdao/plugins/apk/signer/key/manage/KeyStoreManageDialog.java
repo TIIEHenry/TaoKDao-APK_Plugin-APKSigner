@@ -43,6 +43,7 @@ import taokdao.plugins.apk.signer.key.load.KeyPassManager;
 import taokdao.plugins.apk.signer.key.load.KeyStoreManager;
 import taokdao.plugins.apk.signer.key.load.StoreLoader;
 import taokdao.plugins.apk.signer.key.load.StorePassManager;
+import taokdao.plugins.apk.signer.key.manage.adapter.ItemListAdapter;
 import taokdao.plugins.apk.signer.key.manage.adapter.PairTextAdapter;
 import taokdao.plugins.apk.signer.key.manage.adapter.PairTextItem;
 import taokdao.plugins.apk.signer.key.manage.adapter.SimpleAdapterViewOnItemSelectedListener;
@@ -66,23 +67,27 @@ public class KeyStoreManageDialog {
     }
 
     private void showStoreManageDialog(List<KeyStoreItem> keyStoreItemList) {
-        List<String> nameList = new ArrayList<>();
+        List<CharSequence> nameList = new ArrayList<>();
         for (KeyStoreItem keyStoreItem : keyStoreItemList) {
             nameList.add(keyStoreItem.storeFile.getName());
         }
-        Dialogs.global
+
+        ItemListAdapter adapter = new ItemListAdapter(pluginContext,main, nameList);
+        adapter.setOnItemClickListener((itemView, item, position) -> prepareShowStoreInfo(keyStoreItemList.get(position)));
+
+        IDialog dialog = Dialogs.global
                 .asList()
-                .typeRegular()
+                .typeCustom()
                 .title("KeyStore Manage")
-                .items(nameList)
-                .itemsCallback(
-                        (dialog, itemView, position, text) ->
-                                prepareShowStoreInfo(keyStoreItemList.get(position))
-                )
-                .itemsLongCallback(
-                        (dialog, itemView, position, text) ->
-                                manageKeyStore(keyStoreItemList.get(position), dialog)
-                )
+                .adapter(adapter)
+//                .itemsCallback(
+//                        (dialog,  position, text) ->
+//                                prepareShowStoreInfo(keyStoreItemList.get(position))
+//                )
+//                .itemsLongCallback(
+//                        (dialog,  position, text) ->
+//                                manageKeyStore(keyStoreItemList.get(position), dialog)
+//                )
                 .neutralText("导入")
                 .onNeutral(
                         this::importKeyStore
@@ -91,6 +96,7 @@ public class KeyStoreManageDialog {
                 .onPositive(IDialog::dismiss)
                 .autoDismiss(false)
                 .show();
+        adapter.setOnItemLongClickListener((itemView, item, position) -> manageKeyStore(keyStoreItemList.get(position), dialog));
     }
 
 
@@ -201,28 +207,25 @@ public class KeyStoreManageDialog {
     }
 
     private void showAliasListDialog(KeyStoreItem keyStoreItem, StorePassManager storePassManager) {
-        ArrayList<String> aliases = new ArrayList<>();
+        ArrayList<CharSequence> aliases = new ArrayList<>();
         for (KeyAliasItem keyAliasItem : keyStoreItem.keyAliasItems) {
             aliases.add(keyAliasItem.alias);
         }
+
+        ItemListAdapter adapter = new ItemListAdapter(pluginContext, main, aliases);
+        adapter.setOnItemClickListener((itemView, item, position) ->            prepareShowAlias(keyStoreItem.keyStore, keyStoreItem.keyAliasItems.get(position), storePassManager));
+
+
         Dialogs.global
                 .asList()
-                .typeRegular()
+                .typeCustom()
                 .title(keyStoreItem.storeFile.getName())
-                .items(aliases)
-                .itemsCallback(
-                        (dialog, itemView, position, text) -> {
-                            prepareShowAlias(keyStoreItem.keyStore, keyStoreItem.keyAliasItems.get(position), storePassManager);
-                        }
-                )
-                .itemsLongCallback(
-                        (dialog, itemView, position, text) ->
-                                manageKeyStoreAlias(keyStoreItem, keyStoreItem.keyAliasItems.get(position))
-                )
+                .adapter(adapter)
                 .autoDismiss(false)
                 .positiveText()
                 .onPositive(IDialog::dismiss)
                 .show();
+        adapter.setOnItemLongClickListener((itemView, item, position) -> manageKeyStoreAlias(keyStoreItem, keyStoreItem.keyAliasItems.get(position)));
     }
 
     private void prepareShowAlias(KeyStore keyStore, KeyAliasItem keyAliasItem, StorePassManager storePassManager) {
@@ -311,12 +314,12 @@ public class KeyStoreManageDialog {
     private boolean manageKeyStore(KeyStoreItem keyStoreItem, IDialog manageDialog) {
         StorePassManager storePassManager = keyPassManager.getStorePassManager(keyStoreItem.storeFile.getName());
         List<Pair<String, Runnable>> itemList = new ArrayList<>();
-        List<String> items = new ArrayList<>();
+        List<CharSequence> items = new ArrayList<>();
         itemList.add(new Pair<>("重命名", () -> {
-            showRenameDialog(keyStoreItem, manageDialog,storePassManager);
+            showRenameDialog(keyStoreItem, manageDialog, storePassManager);
         }));
         itemList.add(new Pair<>("删除", () -> {
-            requestDeleteFile(keyStoreItem.storeFile,storePassManager);
+            requestDeleteFile(keyStoreItem.storeFile, storePassManager);
 
             manageDialog.dismiss();
         }));
@@ -329,11 +332,13 @@ public class KeyStoreManageDialog {
         }
         Dialogs.global
                 .asList()
+//                .typeCustom()
+//                .adapter(adapter)
                 .typeRegular()
                 .title(keyStoreItem.storeFile.getName())
                 .items(items)
                 .itemsCallback(
-                        (dialog, itemView, position, text) -> {
+                        (dialog, position, text) -> {
                             itemList.get(position).second.run();
                         }
                 )
@@ -381,7 +386,7 @@ public class KeyStoreManageDialog {
                 .input("Enter a new name", oldName, (dialog, input) -> {
                     boolean success = false;
                     try {
-                        File newFile=new File(keyStoreItem.storeFile.getParentFile(), input.toString());
+                        File newFile = new File(keyStoreItem.storeFile.getParentFile(), input.toString());
                         success = keyStoreItem.storeFile.renameTo(newFile);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -587,7 +592,7 @@ public class KeyStoreManageDialog {
         Dialogs.global
                 .asLoading()
                 .addLoadingTask("加载秘钥中", iLoadingDialog -> {
-                    Log.e(getClass().getSimpleName(), "加载秘钥中: " );
+                    Log.e(getClass().getSimpleName(), "加载秘钥中: ");
                     List<KeyStoreItem> keyStoreItemList = KeyStoreManager.loadItemListFromDir(keyPassManager, keysDir);
                     main.runOnUIThread(() -> showStoreManageDialog(keyStoreItemList));
                 })
