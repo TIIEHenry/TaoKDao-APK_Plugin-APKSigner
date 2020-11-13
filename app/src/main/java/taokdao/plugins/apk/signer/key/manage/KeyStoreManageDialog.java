@@ -470,6 +470,7 @@ public class KeyStoreManageDialog {
             keyParam.keyAliasType = alias_type_list[position];
         });
         EditText edit_alias_pass = layout.findViewById(R.id.edit_alias_pass);
+
         LinearLayout ll_more = layout.findViewById(R.id.ll_more);
         CheckBox cb_show_more = layout.findViewById(R.id.cb_show_more);
         cb_show_more.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -534,18 +535,18 @@ public class KeyStoreManageDialog {
                     }
                     keyParam.storePath = storeFile.getAbsolutePath();
                     keyParam.storePass = edit_store_pass.getText().toString();
-                    if (keyParam.storePass.isEmpty()) {
-                        edit_store_pass.setError("文件名不能为空");
+                    if (keyParam.storePass.length()<6) {
+                        edit_store_pass.setError("密码不能少于6位");
                         return;
                     }
                     keyParam.keyAlias = edit_alias_name.getText().toString();
                     if (keyParam.keyAlias.isEmpty()) {
-                        edit_alias_name.setError("文件名不能为空");
+                        edit_alias_name.setError("别名不能为空");
                         return;
                     }
                     keyParam.keyPass = edit_alias_pass.getText().toString();
-                    if (keyParam.keyPass.isEmpty()) {
-                        edit_alias_pass.setError("密码不能为空");
+                    if (keyParam.keyPass.length()<6) {
+                        edit_alias_pass.setError("密码不能少于6位");
                         return;
                     }
                     if (edit_validate.getText().toString().isEmpty()) {
